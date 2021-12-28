@@ -51,10 +51,14 @@ jobs:
   
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          echo $VERSION_SUFFIX > commit_id.txt
+          scp commit_id.txt -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}:/tmp
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             #Now we have got the access of EC2 and we will start the deploy .
-            echo $VERSION_SUFFIX
+            commit_id=$(cat /tmp/commit_id.txt)
             sudo su -
-            docker pull  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$VERSION_SUFFIX            
-            docker run -it  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$VERSION_SUFFIX  &
+            docker pull  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$commit_id           
+            docker run -it  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$commit_id  &
+            exit
+            exit
           '
