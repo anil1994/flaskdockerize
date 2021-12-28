@@ -47,16 +47,14 @@ jobs:
             PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
             HOSTNAME : ${{ secrets.HOSTNAME  }}
             USER_NAME : ${{ secrets.USER_NAME  }}
-            VERSION_PREFIX: "1.0"
             VERSION_SUFFIX: ${{ github.run_number }}
-            NAME: "demo"
-            ECR: "635719328626.dkr.ecr.eu-central-1.amazonaws.com"
-            
+  
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             #Now we have got the access of EC2 and we will start the deploy .
             echo $VERSION_SUFFIX
+            sudo su -
             docker pull  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$VERSION_SUFFIX            
             docker run -it  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$VERSION_SUFFIX  &
           '
