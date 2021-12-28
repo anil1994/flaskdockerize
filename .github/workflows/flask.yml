@@ -59,6 +59,8 @@ jobs:
             sudo su -
             aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 635719328626.dkr.ecr.eu-central-1.amazonaws.com
             docker pull  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$commit_id
-            sleep 10
-            docker run -it  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$commit_id  &    
+            ##get one version early
+            x=$(( $commit_id - 1 ))
+            docker image rm 635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$x -f
+            docker run -it  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$commit_id  & 
           '
