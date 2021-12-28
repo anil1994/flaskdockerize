@@ -52,7 +52,7 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           echo $VERSION_SUFFIX > commit_id.txt
-          scp commit_id.txt -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}:/tmp
+          scp -o StrictHostKeyChecking=no -i private_key commit_id.txt  ${USER_NAME}@${HOSTNAME}:/tmp
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             #Now we have got the access of EC2 and we will start the deploy .
             commit_id=$(cat /tmp/commit_id.txt)
