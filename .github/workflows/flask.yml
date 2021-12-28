@@ -57,6 +57,7 @@ jobs:
             #Now we have got the access of EC2 and we will start the deploy .
             commit_id=$(cat /tmp/commit_id.txt)
             sudo su -
+            aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 635719328626.dkr.ecr.eu-central-1.amazonaws.com
             docker pull  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$commit_id           
             docker run -it  635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$commit_id  &
             exit
