@@ -63,6 +63,6 @@ jobs:
             x=$(( $commit_id - 1 ))
             oldversion=$(docker container ls | grep $x | awk '\''{print $1}'\''|sort)
             docker container stop $oldversion
-            docker run 635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$commit_id  & 
+            docker run -p 5000:5000 635719328626.dkr.ecr.eu-central-1.amazonaws.com/demo:1.0.$commit_id  & 
             #finish deploy
           '
