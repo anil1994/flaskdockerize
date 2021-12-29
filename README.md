@@ -3,6 +3,8 @@ This containerised Python application uses Flask. It is a simple example for AWS
 
 My application listens flask default port 5000.
 
+Port mapping of our application is 5000:5000
+
 I can dockerize this flask application by using dockerfile
 
 I can expose my application via Elastic Load Balancer
